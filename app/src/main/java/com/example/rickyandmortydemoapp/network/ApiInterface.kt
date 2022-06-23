@@ -1,14 +1,11 @@
 package com.example.rickyandmortydemoapp.network
 
-import com.example.rickyandmortydemoapp.model.LoginRequest
-import com.example.rickyandmortydemoapp.model.LoginResponse
+import com.example.rickyandmortydemoapp.model.CharacterResponse
 import kotlinx.coroutines.Deferred
-import retrofit2.http.Body
-import retrofit2.http.POST
-
+import retrofit2.http.GET
 
 interface ApiInterface {
 
-    @POST("users/sign_in")
-    fun callLoginAsync(@Body request: LoginRequest): Deferred<LoginResponse>
+    @GET("api/character")
+    fun getCharacterListAsync(): Deferred<CharacterResponse>
 }

@@ -3,14 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/drawable-v24/icon_back_arrow.xml" value="0.1475" />
+        <entry key="app/src/main/res/drawable/rectangular_border_rounded_corner.xml" value="0.1475" />
         <entry key="app/src/main/res/layout/activity_app_base.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18072916666666666" />
+        <entry key="app/src/main/res/layout/activity_ricky_and_morty_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ricky_and_morty_listing.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/custom_popup_progress.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/include_empty_screen_layout.xml" value="0.18072916666666666" />
+        <entry key="app/src/main/res/layout/item_rickey_and_morty.xml" value="0.25" />
         <entry key="app/src/main/res/layout/new_toolbar.xml" value="0.18072916666666666" />
       </map>
     </option>

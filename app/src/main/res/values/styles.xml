@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ConvergenceRegular" parent="AppTheme.NoActionBar">
+        <item name="fontFamily">@font/convergence_regular</item>
+    </style>
+
     <style name="ToolbarTheme" parent="AppTheme">
         <item name="fontFamily">@font/convergence_regular</item>
         <item name="android:textStyle">bold</item>
