@@ -44,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
         Toast.makeText(this, message, duration).show()
     }
 
-    private fun showActivitySpinner() {
+    fun showActivitySpinner() {
         try {
             if (spinningDialog != null) spinningDialog?.show()
         } catch (e: Exception) {
@@ -52,7 +52,7 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
         }
     }
 
-    private fun dismissActivitySpinner() {
+     fun dismissActivitySpinner() {
         try {
             if (spinningDialog != null) spinningDialog?.dismiss()
         } catch (e: Exception) {

@@ -9,7 +9,12 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(var apiService: ApiInterface) :
     BaseRepository() {
 
-    fun getCharacterListAsync(): Deferred<CharacterResponse> {
-        return apiService.getCharacterListAsync()
+    fun getCharacterListAsync(pageNo: Int, perPage: Int): Deferred<CharacterResponse> {
+        return apiService.getCharacterListAsync(pageNo)
     }
+
+    fun getSearchCharacterListAsync(searchedData: String): Deferred<CharacterResponse> {
+        return apiService.getSearchCharacterListAsync(searchedData)
+    }
+
 }

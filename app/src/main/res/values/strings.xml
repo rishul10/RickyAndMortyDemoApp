@@ -3,4 +3,7 @@
 
     <string name="error_server_error_message">Unable to connect to the server, please try again after sometime..</string>
     <string name="error_no_internet_connection">No internet connection available.</string>
+    <string name="search">Search</string>
+    <string name="search_your_character">Search your character</string>
+
 </resources>

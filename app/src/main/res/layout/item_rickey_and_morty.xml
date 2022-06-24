@@ -12,23 +12,20 @@
         android:id="@+id/card_view_thumbnail"
         android:layout_width="210dp"
         app:cardUseCompatPadding="true"
-        app:cardCornerRadius="12dp"
-        android:elevation="0dp"
-        app:cardElevation="0dp"
+        app:cardCornerRadius="16dp"
+        android:elevation="16dp"
+        app:cardElevation="6dp"
         android:layout_centerHorizontal="true"
-        android:layout_height="130dp">
+        android:layout_height="280dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:cropToPadding="true"
-            app:riv_corner_radius="4dp"
             android:scaleType="fitXY"
             android:transitionName="character"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/coloTransparent"
             android:background="@drawable/rectangular_border_rounded_corner"
             android:id="@+id/image_view_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/cat"
             android:textColor="@color/black" />
 
     </androidx.cardview.widget.CardView>
@@ -40,12 +37,13 @@
         android:layout_below="@+id/card_view_thumbnail"
         android:layout_centerInParent="true"
         android:layout_marginBottom="4dp"
-        android:fontFamily="@font/quicksand_regular"
+        android:fontFamily="@font/convergence_regular"
         android:padding="8dp"
-        tools:text="helllosdnchdschsdc"
+        android:textStyle="bold"
         android:textColor="#636363"
         android:textSize="12sp"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:text="helllosdnchdschsdc" />
 
 
 </RelativeLayout>

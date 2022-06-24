@@ -1,17 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
-    <include layout="@layout/new_toolbar"/>
+    <include layout="@layout/new_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/rectangular_border"
+        android:backgroundTint="#EFF6F6"
+        android:gravity="start"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
+
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:autofillHints="name"
+            android:background="@null"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="12dp"
+            android:textAlignment="viewStart"
+            android:textColorHint="#9BBFC8" />
+
+        <ImageView
+            android:id="@+id/textViewClear"
+            android:layout_width="26dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/search"
+            android:src="@drawable/cancel_icon"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/viewSeparator"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#E3E0E0"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/searchItemButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/search"
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/search_icon" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRickyMortyListing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:overScrollMode="never"
         tools:itemCount="5" />
 
     <include layout="@layout/include_empty_screen_layout" />

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.RickyAndMortyDetailsActivity">
 
     <include
@@ -29,26 +30,185 @@
                 android:background="#E2F3F2"
                 android:visibility="visible" />
 
-            <ImageView
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="4dp"
+                android:id="@+id/card_view_thumbnail"
+                android:layout_width="match_parent"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="12dp"
+                android:elevation="0dp"
+                app:cardElevation="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="400dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:cropToPadding="true"
+                app:riv_corner_radius="4dp"
+                android:scaleType="fitXY"
+                android:transitionName="character"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/rectangular_border_rounded_corner"
                 android:id="@+id/image_view_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:layout_below="@+id/viewSeparatorToolbar"
-                android:layout_marginTop="4dp"
-                android:padding="4dp"
-                android:src="@drawable/cat"
-                android:transitionName="character" />
+                android:textColor="@color/black" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/image_view_thumbnail"
+                android:layout_below="@+id/card_view_thumbnail"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="-40dp"
+                android:fontFamily="@font/convergence_regular"
+                android:padding="8dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="mbchjschjbsbjhc" />
+
+            <TextView
+                android:id="@+id/textViewGenderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewName"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="Gender" />
+
+            <TextView
+                android:id="@+id/textViewGenderValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewName"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/convergence_regular"
                 android:padding="4dp"
-                android:text="mbchjschjbsbjhc"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                tools:text="Male" />
+
+            <TextView
+                android:id="@+id/textViewLocationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewGenderValue"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="Location" />
+
+            <TextView
+                android:id="@+id/textViewLocationValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewGenderValue"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/convergence_regular"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                tools:text="Earth" />
+
+            <TextView
+                android:id="@+id/textViewStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewLocationValue"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="Status" />
+
+            <TextView
+                android:id="@+id/textViewStatusValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewLocationValue"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/convergence_regular"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                tools:text="Earth" />
+
+            <TextView
+                android:id="@+id/textViewTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewStatusValue"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="Type" />
+
+            <TextView
+                android:id="@+id/textViewTypeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewStatusValue"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/convergence_regular"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                tools:text="Earth" />
+
+            <TextView
+                android:id="@+id/textViewSpeciesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewTypeValue"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="Species" />
+
+            <TextView
+                android:id="@+id/textViewSpeciesValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewTypeValue"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/convergence_regular"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                tools:text="Earth" />
+
+            <TextView
+                android:id="@+id/textViewOriginLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewSpeciesValue"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="Origin" />
+
+            <TextView
+                android:id="@+id/textViewOriginValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewSpeciesValue"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/convergence_regular"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                tools:text="Earth" />
 
         </RelativeLayout>
 
