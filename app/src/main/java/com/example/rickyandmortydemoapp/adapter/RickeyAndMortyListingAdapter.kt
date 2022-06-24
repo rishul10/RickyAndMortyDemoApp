@@ -42,12 +42,16 @@ class RickeyAndMortyListingAdapter(
             .load(data.image)
             .placeholder(R.drawable.ic_photo)
             .error(R.drawable.ic_photo)
-            .into(  holder.itemView.image_view_thumbnail)
+            .into(holder.itemView.image_view_thumbnail)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(mContext, RickyAndMortyDetailsActivity::class.java)
             intent.putExtra(ApplicationConstant.CHARACTER_DATA, data)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext as Activity, (holder.itemView.image_view_thumbnail)!!, "character")
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                mContext as Activity,
+                (holder.itemView.image_view_thumbnail)!!,
+                "character"
+            )
             mContext.startActivity(intent, options.toBundle())
         }
     }

@@ -1,13 +1,14 @@
 package com.example.rickyandmortydemoapp.adapter
 
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.rickyandmortydemoapp.model.CharacterItem
 import com.example.rickyandmortydemoapp.viewholder.RickeyAndMortyListingViewHolder
 
 class RickyAndMortyListingAdapter :
-    ListAdapter<CharacterItem, RickeyAndMortyListingViewHolder>(REPO_COMPARATOR) {
+    PagingDataAdapter<CharacterItem, RickeyAndMortyListingViewHolder>(REPO_COMPARATOR) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

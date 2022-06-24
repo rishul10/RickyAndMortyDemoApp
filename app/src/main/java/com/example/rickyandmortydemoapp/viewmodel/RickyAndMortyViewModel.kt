@@ -2,7 +2,12 @@ package com.example.rickyandmortydemoapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.example.rickyandmortydemoapp.model.CharacterResponse
+import com.example.rickyandmortydemoapp.model.CharactersPagingSource
 import com.example.rickyandmortydemoapp.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,14 +22,19 @@ class RickyAndMortyViewModel @Inject constructor(private var userRepository: Use
     private var _searchCharacterListResponse = MutableLiveData<CharacterResponse>()
     val searchCharacterListResponse: LiveData<CharacterResponse> get() = _searchCharacterListResponse
 
-    fun getCharacterList(pageNo: Int,perPage: Int) {
-        executeApiCallByCoroutine {
-            val response = userRepository.getCharacterListAsync(pageNo,perPage).await()
-            withContext(Dispatchers.Main) {
-                _characterListResponse.value = (response)
-            }
-        }
-    }
+    val characterResponse =
+        Pager(config = PagingConfig(pageSize = 10, prefetchDistance = 2), pagingSourceFactory = {
+            CharactersPagingSource(userRepository)
+        }).flow.cachedIn(viewModelScope)
+
+//    fun getCharacterList(pageNo: Int,perPage: Int) {
+//        executeApiCallByCoroutine {
+//            val response = userRepository.getCharacterListAsync(pageNo,perPage).await()
+//            withContext(Dispatchers.Main) {
+//                _characterListResponse.value = (response)
+//            }
+//        }
+//    }
 
     fun getSearchCharacterList(searchedData:String) {
         executeApiCallByCoroutine {

@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface ApiInterface {
 
     @GET("api/character")
-    fun getCharacterListAsync(@Query("page") pageNo: Int): Deferred<CharacterResponse>
+     fun getCharacterListAsync(@Query("page") pageNo: Int): Deferred<CharacterResponse>
 
     @GET("api/character")
     fun getSearchCharacterListAsync(@Query("name") CharacterName: String): Deferred<CharacterResponse>
