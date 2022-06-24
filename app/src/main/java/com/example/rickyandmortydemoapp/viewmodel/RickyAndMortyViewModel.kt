@@ -17,9 +17,9 @@ class RickyAndMortyViewModel @Inject constructor(private var userRepository: Use
     private var _searchCharacterListResponse = MutableLiveData<CharacterResponse>()
     val searchCharacterListResponse: LiveData<CharacterResponse> get() = _searchCharacterListResponse
 
-    fun getCharacterList(pageNo: Int,perPage: Int) {
+    fun getCharacterList(pageNo: Int) {
         executeApiCallByCoroutine {
-            val response = userRepository.getCharacterListAsync(pageNo,perPage).await()
+            val response = userRepository.getCharacterListAsync(pageNo).await()
             withContext(Dispatchers.Main) {
                 _characterListResponse.value = (response)
             }

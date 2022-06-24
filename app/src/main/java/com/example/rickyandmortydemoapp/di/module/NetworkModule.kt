@@ -9,6 +9,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -38,7 +39,9 @@ class NetworkModule {
         val httpClient = OkHttpClient.Builder()
             .readTimeout(TIMEOUT_READ.toLong(), TimeUnit.MINUTES)
             .connectTimeout(TIMEOUT_CONNECTION.toLong(), TimeUnit.MINUTES)
-
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        httpClient.addInterceptor(logging)
         httpClient.addInterceptor { chain ->
             val original = chain.request()
             val request = original.newBuilder()

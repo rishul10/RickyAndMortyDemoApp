@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,18 +18,21 @@ import com.example.rickyandmortydemoapp.viewmodel.RickyAndMortyViewModel
 import kotlinx.android.synthetic.main.activity_ricky_and_morty_listing.*
 import kotlinx.android.synthetic.main.include_empty_screen_layout.*
 import kotlinx.android.synthetic.main.new_toolbar.*
+import ru.alexbykov.nopaginate.callback.PaginateView
+import ru.alexbykov.nopaginate.paginate.NoPaginate
 import javax.inject.Inject
 
-
-class RickyAndMortyListingActivity : BaseActivity() {
+class RickyAndMortyListingActivity : BaseActivity(), PaginateView {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var noPaginate: NoPaginate
+    private var pageCounter: Int = 0
 
     private lateinit var viewModel: RickyAndMortyViewModel
 
     private var characterList: ArrayList<CharacterItem> = arrayListOf()
-    private lateinit var adapter: RickeyAndMortyListingAdapter
+    private lateinit var rickyAndMortyListingAdapter: RickeyAndMortyListingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,13 @@ class RickyAndMortyListingActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        viewModel.getCharacterList(1, 10)
+        if (NetworkUtils.isInternet(this)) {
+            recyclerViewRickyMortyListing.visibility = View.VISIBLE
+            initializeRecyclerView()
+        } else {
+            recyclerViewRickyMortyListing.visibility = View.GONE
+            toast(getString(R.string.error_no_internet_connection))
+        }
 
         searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
@@ -76,16 +84,42 @@ class RickyAndMortyListingActivity : BaseActivity() {
         textViewClear.setOnClickListener {
             searchBar.setText("")
             if (NetworkUtils.isInternet(this@RickyAndMortyListingActivity)) {
-                viewModel.getCharacterList(1, 10)
+                pageCounter = 0
+                apiCallForGettingList()
             }
             textViewClear.visibility = View.GONE
             viewSeparator.visibility = View.GONE
         }
+    }
 
-        recyclerViewRickyMortyListing.layoutManager = GridLayoutManager(this, 2)
-        recyclerViewRickyMortyListing.isNestedScrollingEnabled = false
-        adapter = RickeyAndMortyListingAdapter(this@RickyAndMortyListingActivity, characterList)
-        recyclerViewRickyMortyListing.adapter = adapter
+    private fun initializeRecyclerView() {
+        recyclerViewRickyMortyListing?.apply {
+            layoutManager = GridLayoutManager(this@RickyAndMortyListingActivity, 2)
+            rickyAndMortyListingAdapter =
+                RickeyAndMortyListingAdapter(this@RickyAndMortyListingActivity, characterList)
+            adapter = rickyAndMortyListingAdapter
+            initPagination() // call only after adapter set.
+        }
+    }
+
+    private fun initPagination() {
+        noPaginate = NoPaginate.with(recyclerViewRickyMortyListing)
+            .setOnLoadMoreListener {
+                showPaginateLoading(true)
+                apiCallForGettingList()
+            }
+            .setLoadingTriggerThreshold(0)
+            .build()
+    }
+
+    private fun apiCallForGettingList() {
+        if (NetworkUtils.isInternet(this)) {
+            pageCounter += 1
+            viewModel.getCharacterList(pageCounter)
+        } else {
+            toast(getString(R.string.error_no_internet_connection))
+            showPaginateLoading(false)
+        }
     }
 
     private fun apiToFetchSearchedData() {
@@ -102,31 +136,56 @@ class RickyAndMortyListingActivity : BaseActivity() {
 
     override fun setupObservers() {
         observeProgressBarAndErrorLiveData(viewModel)
-        viewModel.characterListResponse.observe(this@RickyAndMortyListingActivity) {
-            if (it.results.size > 0) {
-                characterList.clear()
-                characterList.addAll(it.results)
-                adapter.notifyDataSetChanged()
-            } else {
+        viewModel.characterListResponse.observe(this) {
+            if (it.results == null || (it.results.isEmpty() && pageCounter == 1)) {
                 recyclerViewRickyMortyListing.visibility = View.GONE
-                search_bar.visibility = View.VISIBLE
                 errorMessageView.visibility = View.VISIBLE
-                errorMessageView.text = "No data found"
+                errorMessageView.text = getString(R.string.no_data_found)
+                setPaginateNoMoreData(true)
+
+            } else {
+                if (pageCounter == 1) {
+                    errorMessageView.visibility = View.GONE
+                    recyclerViewRickyMortyListing.visibility = View.VISIBLE
+
+                    characterList.clear()
+                    rickyAndMortyListingAdapter.notifyDataSetChanged()
+                }
+                for ((i, element) in it.results.withIndex()) {
+                    if (element != null) {
+                        characterList.add(element)
+                    }
+                    rickyAndMortyListingAdapter.notifyItemInserted(i)
+                }
+
+                if (it.info.count != null) {
+                    if (characterList.size >= it.info.count) { // it means last page.
+                        setPaginateNoMoreData(true)
+                    } else {
+                        setPaginateNoMoreData(false)
+                    }
+                }
             }
+            showPaginateLoading(false)
         }
 
         viewModel.searchCharacterListResponse.observe(this@RickyAndMortyListingActivity) {
             if (it.results.size > 0) {
                 characterList.clear()
                 characterList.addAll(it.results)
-                adapter.notifyDataSetChanged()
+                rickyAndMortyListingAdapter.notifyDataSetChanged()
             } else {
                 recyclerViewRickyMortyListing.visibility = View.GONE
                 search_bar.visibility = View.VISIBLE
                 errorMessageView.visibility = View.VISIBLE
-                errorMessageView.text = "No data found"
+                errorMessageView.text = getString(R.string.no_data_found)
             }
         }
+    }
+
+    override fun onDestroy() {
+        noPaginate.unbind()
+        super.onDestroy()
     }
 
     override fun onBackPressed() {
@@ -135,17 +194,14 @@ class RickyAndMortyListingActivity : BaseActivity() {
         builder.setPositiveButton("Yes") { dialog, which ->
             dialog.dismiss()
             finish()
-            finishAffinity();
-
         }
 
         builder.setNegativeButton("Cancel") { dialog, which ->
-        dialog.dismiss()
+            dialog.dismiss()
         }
 
         val alertDialog = builder.create()
         alertDialog.show()
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -154,5 +210,17 @@ class RickyAndMortyListingActivity : BaseActivity() {
                 onBackPressed()
         }
         return true
+    }
+
+    override fun showPaginateError(show: Boolean) {
+        noPaginate.showError(show)
+    }
+
+    override fun setPaginateNoMoreData(show: Boolean) {
+        noPaginate.setNoMoreItems(show)
+    }
+
+    override fun showPaginateLoading(show: Boolean) {
+        noPaginate.showLoading(show)
     }
 }
