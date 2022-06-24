@@ -6,5 +6,12 @@
     <string name="search">Search</string>
     <string name="search_your_character">Search your character</string>
     <string name="no_data_found">No data found</string>
+    <string name="gender">Gender</string>
+    <string name="location">Location</string>
+    <string name="status">Status</string>
+    <string name="type">Type</string>
+    <string name="species">Species</string>
+    <string name="origin">Origin</string>
+    <string name="empty_value">-</string>
 
 </resources>

@@ -61,9 +61,6 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
     }
 
     private fun handleAuthorizationFailed() {
-
-        //Clear all the locally saved data and redirect to login screen
-
         try {
             val userInfo = getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
             userInfo.edit().clear().apply()
@@ -81,13 +78,4 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
         }
 
     }
-
-    /*protected fun startFwdAnimation(activity: Activity) {
-        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-    }
-
-    protected fun startBackAnimation(activity: Activity) {
-        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-    }*/
-
 }

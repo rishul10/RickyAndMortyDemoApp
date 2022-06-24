@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_rickey_and_morty.view.*
 
 class RickeyAndMortyListingAdapter(
     private val mContext: Context,
-    private val rickeyAndMortyCharacterList: ArrayList<CharacterItem>
+    private val mRickeyAndMortyCharacterList: ArrayList<CharacterItem>
 ) :
     RecyclerView.Adapter<RickeyAndMortyListingAdapter.RickeyAndMortyListingViewHolder>() {
 
@@ -34,7 +34,7 @@ class RickeyAndMortyListingAdapter(
 
     override fun onBindViewHolder(holder: RickeyAndMortyListingViewHolder, position: Int) {
 
-        val data = rickeyAndMortyCharacterList[holder.bindingAdapterPosition]
+        val data = mRickeyAndMortyCharacterList[holder.bindingAdapterPosition]
 
         holder.itemView.textViewName.text = data.name
 
@@ -42,17 +42,21 @@ class RickeyAndMortyListingAdapter(
             .load(data.image)
             .placeholder(R.drawable.ic_photo)
             .error(R.drawable.ic_photo)
-            .into(  holder.itemView.image_view_thumbnail)
+            .into(holder.itemView.image_view_thumbnail)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(mContext, RickyAndMortyDetailsActivity::class.java)
             intent.putExtra(ApplicationConstant.CHARACTER_DATA, data)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext as Activity, (holder.itemView.image_view_thumbnail)!!, "character")
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                mContext as Activity,
+                (holder.itemView.image_view_thumbnail)!!,
+                "character"
+            )
             mContext.startActivity(intent, options.toBundle())
         }
     }
 
     override fun getItemCount(): Int {
-        return rickeyAndMortyCharacterList.size
+        return mRickeyAndMortyCharacterList.size
     }
 }

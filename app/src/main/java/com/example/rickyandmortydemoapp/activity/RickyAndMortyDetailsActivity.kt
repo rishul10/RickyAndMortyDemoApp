@@ -1,21 +1,14 @@
 package com.example.rickyandmortydemoapp.activity
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.example.rickyandmortydemoapp.R
-import com.example.rickyandmortydemoapp.base.BaseActivity
 import com.example.rickyandmortydemoapp.model.CharacterItem
 import com.example.rickyandmortydemoapp.utils.ApplicationConstant
 import kotlinx.android.synthetic.main.activity_ricky_and_morty_details.*
-import kotlinx.android.synthetic.main.item_rickey_and_morty.view.*
 import kotlinx.android.synthetic.main.new_toolbar.*
 
 class RickyAndMortyDetailsActivity : AppCompatActivity() {
@@ -29,7 +22,7 @@ class RickyAndMortyDetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        if (intent.extras != null) {
+        if (intent.extras != null && intent.hasExtra(ApplicationConstant.CHARACTER_DATA)) {
             characterItem =
                 intent?.getParcelableExtra(ApplicationConstant.CHARACTER_DATA) ?: CharacterItem()
         }
@@ -46,14 +39,47 @@ class RickyAndMortyDetailsActivity : AppCompatActivity() {
 
         if (TextUtils.isEmpty(characterItem.name).not()) {
             textViewName.text = characterItem.name
+        } else {
+            textViewName.text = getString(R.string.empty_value)
         }
 
-        textViewGenderValue.text = characterItem.gender
-        textViewLocationValue.text = characterItem.location?.name
-        textViewStatusValue.text = characterItem.status
-        textViewTypeValue.text = characterItem.type
-        textViewSpeciesValue.text = characterItem.species
-        textViewOriginValue.text = characterItem.origin?.name
+        if (TextUtils.isEmpty(characterItem.gender).not()) {
+            textViewGenderValue.text = characterItem.gender
+        } else {
+            textViewGenderValue.text = getString(R.string.empty_value)
+        }
+
+        if (characterItem.location != null && TextUtils.isEmpty(characterItem.location?.name)
+                .not()
+        ) {
+            textViewLocationValue.text = characterItem.location?.name
+        } else {
+            textViewLocationValue.text = getString(R.string.empty_value)
+        }
+
+        if (TextUtils.isEmpty(characterItem.status).not()) {
+            textViewStatusValue.text = characterItem.status
+        } else {
+            textViewStatusValue.text = getString(R.string.empty_value)
+        }
+
+        if (TextUtils.isEmpty(characterItem.type).not()) {
+            textViewTypeValue.text = characterItem.type
+        } else {
+            textViewTypeValue.text = getString(R.string.empty_value)
+        }
+
+        if (TextUtils.isEmpty(characterItem.species).not()) {
+            textViewSpeciesValue.text = characterItem.species
+        } else {
+            textViewSpeciesValue.text = getString(R.string.empty_value)
+        }
+
+        if (characterItem.origin != null && TextUtils.isEmpty(characterItem.origin?.name).not()) {
+            textViewOriginValue.text = characterItem.origin?.name
+        } else {
+            textViewOriginValue.text = getString(R.string.empty_value)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
